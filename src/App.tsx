@@ -39,13 +39,13 @@ function App() {
   const ActiveSectionComponent = activeSection?.component ?? (() => null);
 
   return (
-    <div className="flex min-h-screen bg-slate-950 text-slate-100">
-      <aside className="flex w-64 flex-col border-r border-white/10 bg-slate-900/70 px-6 py-6">
-        <div className="text-lg font-semibold tracking-tight">
+    <div className="flex min-h-screen bg-transparent text-ink-900">
+      <aside className="flex w-72 flex-col gap-6 rounded-r-3xl border-r border-plum-200/60 bg-lavender-100 px-8 py-8 shadow-card">
+        <div className="text-lg font-semibold tracking-tight text-plum-600">
           Sustainability Survey
         </div>
         <nav className="mt-6">
-          <ul className="flex flex-col gap-1 text-sm font-medium">
+          <ul className="flex flex-col gap-2 text-sm font-medium text-ink-700">
             {navigationSections.map((section) => {
               const isActive = section.id === activeSectionId;
 
@@ -54,16 +54,16 @@ function App() {
                   <button
                     type="button"
                     onClick={() => setActiveSectionId(section.id)}
-                    className={`flex w-full items-center justify-between rounded-md px-3 py-2 text-left transition ${
+                    className={`flex w-full items-center justify-between rounded-xl px-4 py-3 text-left transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-plum-400/50 ${
                       isActive
-                        ? "bg-slate-800/80 text-white"
-                        : "text-slate-300 hover:bg-slate-800/40 hover:text-white"
+                        ? "bg-plum-500 text-white shadow-card"
+                        : "text-ink-700 hover:bg-plum-200/30 hover:text-plum-600"
                     }`}
                   >
                     <span className="pr-2 leading-snug">{section.label}</span>
                     <span
                       className={`text-xs ${
-                        isActive ? "text-white" : "text-slate-500"
+                        isActive ? "text-white" : "text-plum-400"
                       }`}
                     >
                       ›
@@ -75,8 +75,8 @@ function App() {
           </ul>
         </nav>
       </aside>
-      <main className="flex flex-1 flex-col p-10">
-        <div className="w-full rounded-lg border border-dashed border-slate-700 bg-slate-900/30 px-10 py-12">
+      <main className="flex flex-1 flex-col p-12">
+        <div className="w-full rounded-[var(--radius-card)] border border-plum-200/60 bg-lavender-100 px-10 py-12 shadow-card ring-1 ring-plum-200/40 backdrop-blur-sm">
           <ActiveSectionComponent />
         </div>
       </main>
