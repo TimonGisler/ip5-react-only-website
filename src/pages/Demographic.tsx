@@ -2,30 +2,48 @@ import { useMemo } from "react";
 import Plot from "react-plotly.js";
 import type { Data, Layout } from "plotly.js";
 
+import { SurveyRepository } from "../data/SurveyRepository";
+
 type RespondentStat = {
   country: string;
-  iso3: string;
   count: number;
 };
 
-const mockRespondentStats: RespondentStat[] = [
-  { country: "Germany", iso3: "DEU", count: 10 },
-  { country: "France", iso3: "FRA", count: 4 },
-  { country: "United States", iso3: "USA", count: 6 },
-  { country: "Switzerland", iso3: "CHE", count: 3 },
-  { country: "India", iso3: "IND", count: 5 },
-  { country: "Australia", iso3: "AUS", count: 2 },
-];
+const surveyResponses = SurveyRepository.get2025Survey();
+
+const normalizeCountry = (value: string) => value.replace(/\s+/g, " ").trim();
 
 const Demographic = () => {
+  const respondentStats = useMemo<RespondentStat[]>(() => {
+    const counts = new Map<string, number>();
+
+    surveyResponses.forEach((response) => {
+      response.countryOfResidence
+        .map(normalizeCountry)
+        .filter(
+          (country) => country.length > 0 && country.toLowerCase() !== "n/a"
+        )
+        .forEach((country) => {
+          counts.set(country, (counts.get(country) ?? 0) + 1);
+        });
+    });
+
+    return Array.from(counts.entries())
+      .map(([country, count]) => ({ country, count }))
+      .sort((a, b) => b.count - a.count);
+  }, []);
+
+  const totalRespondents = surveyResponses.length;
+  const totalCountries = respondentStats.length;
+
   const choroplethData = useMemo<Data[]>(
     () => [
       {
         type: "choropleth",
-        locationmode: "ISO-3",
-        locations: mockRespondentStats.map((item) => item.iso3),
-        z: mockRespondentStats.map((item) => item.count),
-        text: mockRespondentStats.map(
+        locationmode: "country names",
+        locations: respondentStats.map((item) => item.country),
+        z: respondentStats.map((item) => item.count),
+        text: respondentStats.map(
           (item) => `${item.country}: ${item.count} respondents`
         ),
         hovertemplate: "%{text}<extra></extra>",
@@ -43,7 +61,7 @@ const Demographic = () => {
         },
       },
     ],
-    []
+    [respondentStats]
   );
 
   const layout = useMemo<Partial<Layout>>(
@@ -81,8 +99,8 @@ const Demographic = () => {
           Demographic
         </h1>
         <p className="mt-2 max-w-2xl text-sm text-slate-600">
-          Snapshot of where respondents are located. Replace the mock data with
-          live survey results when available.
+          Snapshot of where respondents are located. Based on {totalRespondents}
+          responses across {totalCountries} countries from the 2025 survey.
         </p>
       </header>
 
