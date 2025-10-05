@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 
-import { SurveyRepository } from "../data/SurveyRepository";
-import DemographicChoropleth from "./components/DemographicChoropleth";
-import DemographicCountryTable from "./components/DemographicCountryTable";
-import type { RespondentStat } from "./components/demographicTypes";
+import { SurveyRepository } from "../../data/SurveyRepository";
+import DemographicChoropleth from "./DemographicChoropleth";
+import DemographicCountryTable from "./DemographicCountryTable";
+import type { RespondentStat } from "./demographicTypes";
 
 const surveyResponses = SurveyRepository.get2025Survey();
 

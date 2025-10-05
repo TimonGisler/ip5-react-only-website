@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Demographic from "./pages/Demographic";
+import Demographic from "./pages/demographic/Demographic";
 import DigitalSustainabilityRole from "./pages/DigitalSustainabilityRole";
 import GeneralAwareness from "./pages/GeneralAwareness";
 import SustainabilityTasks from "./pages/SustainabilityTasks";

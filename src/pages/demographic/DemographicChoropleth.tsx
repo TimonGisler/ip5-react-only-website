@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import Plot from "react-plotly.js";
 import type { Data, Layout } from "plotly.js";
 
-import type { RespondentStat } from "./demographicTypes";
+import type { RespondentStat } from "../demographic/demographicTypes";
 
 type DemographicChoroplethProps = {
   respondentStats: RespondentStat[];
