@@ -74,6 +74,7 @@ export class SurveyCsvParser {
   private constructor(records: SurveyRecord[]) {
     this.records = records;
   }
+
   static fromCsv(csv: string): SurveyCsvParser {
     const rows = parseCsv(csv);
     const [headerRow, ...dataRows] = rows;
@@ -82,15 +83,28 @@ export class SurveyCsvParser {
       throw new Error("CSV is missing a header row.");
     }
 
-    // Create a map of expected header text to its column index in the CSV file.
     const normalizedCsvHeaders = headerRow.map(normalizeCell);
     const headerIndexMap = new Map<SurveyColumnKey, number>();
+    // Keep track of CSV column indices that have already been mapped.
+    const usedIndices = new Set<number>();
 
     columnDefinitions.forEach((definition) => {
       const expectedHeader = normalizeCell(definition.header);
-      const index = normalizedCsvHeaders.indexOf(expectedHeader);
-      if (index !== -1) {
-        headerIndexMap.set(definition.key, index);
+      
+      // Search for the next available column that matches the header.
+      let searchFromIndex = 0;
+      let foundIndex = -1;
+
+      // Loop to find a matching header that hasn't been used yet.
+      while ((foundIndex = normalizedCsvHeaders.indexOf(expectedHeader, searchFromIndex)) !== -1) {
+        if (!usedIndices.has(foundIndex)) {
+          // Found an unused column, map it and mark it as used.
+          headerIndexMap.set(definition.key, foundIndex);
+          usedIndices.add(foundIndex);
+          break; // Stop searching for this definition.
+        }
+        // This index was taken, continue searching from the next position.
+        searchFromIndex = foundIndex + 1;
       }
     });
 
@@ -99,13 +113,11 @@ export class SurveyCsvParser {
       .map((row) => {
         const entry: Partial<SurveyRecord> = {};
 
-        // Use the map to find the correct column for each piece of data.
         columnDefinitions.forEach((definition) => {
           const index = headerIndexMap.get(definition.key);
           if (index !== undefined && index < row.length) {
             entry[definition.key] = normalizeCell(row[index]);
           } else {
-            // Handle cases where the column is missing in the CSV.
             entry[definition.key] = "";
           }
         });

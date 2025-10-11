@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import Sidebar from "./components/Sidebar";
+import { SurveyProvider } from "./data/SurveyContext";
+import { YearProvider } from "./data/YearContext";
 import { SurveyRepository } from "./data/SurveyRepository";
 import Demographic from "./pages/demographic/Demographic";
 import DigitalSustainabilityRole from "./pages/DigitalSustainabilityRole";
@@ -36,10 +38,11 @@ function App() {
   );
   const [activeYear, setActiveYear] = useState<string>(availableYears[0]);
 
+  const surveyData = SurveyRepository.getSurvey(activeYear);
+
   useEffect(() => {
-    const data = SurveyRepository.getSurvey(activeYear);
-    console.log(`Data for year ${activeYear}:`, data);
-  }, [activeYear]);
+    console.log(`Data for year ${activeYear}:`, surveyData);
+  }, [activeYear, surveyData]);
 
   const activeSection = navigationSections.find(
     (section) => section.id === activeSectionId
@@ -58,7 +61,11 @@ function App() {
       />
       <main className="flex flex-1 flex-col p-12">
         <div className="w-full rounded-[var(--radius-card)] border border-plum-200/60 bg-lavender-100 px-10 py-12 shadow-card ring-1 ring-plum-200/40 backdrop-blur-sm">
-          <ActiveSectionComponent />
+          <SurveyProvider value={surveyData}>
+            <YearProvider value={activeYear}>
+              <ActiveSectionComponent />
+            </YearProvider>
+          </SurveyProvider>
         </div>
       </main>
     </div>

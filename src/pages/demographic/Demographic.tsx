@@ -1,15 +1,17 @@
 import { useMemo } from "react";
 
-import { SurveyRepository } from "../../data/SurveyRepository";
+import { useSurveyData } from "../../data/SurveyContext";
+import { useYear } from "../../data/YearContext";
 import DemographicChoropleth from "./DemographicChoropleth";
 import DemographicCountryTable from "./DemographicCountryTable";
 import type { RespondentStat } from "./demographicTypes";
 
-const surveyResponses = SurveyRepository.getSurvey("2025");
-
 const normalizeCountry = (value: string) => value.replace(/\s+/g, " ").trim();
 
 const Demographic = () => {
+  const surveyResponses = useSurveyData();
+  const year = useYear();
+
   const respondentStats = useMemo<RespondentStat[]>(() => {
     const counts = new Map<string, number>();
 
@@ -27,7 +29,7 @@ const Demographic = () => {
     return Array.from(counts.entries())
       .map(([country, count]) => ({ country, count }))
       .sort((a, b) => b.count - a.count);
-  }, []);
+  }, [surveyResponses]);
 
   const totalRespondents = surveyResponses.length;
   const totalCountries = respondentStats.length;
@@ -40,7 +42,7 @@ const Demographic = () => {
         </h1>
         <p className="mt-2 max-w-2xl text-sm text-slate-600">
           Snapshot of where respondents are located. Based on {totalRespondents}
-          responses across {totalCountries} countries from the 2025 survey.
+          responses across {totalCountries} countries from the {year} survey.
         </p>
       </header>
 
