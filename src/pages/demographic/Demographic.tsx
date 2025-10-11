@@ -5,7 +5,7 @@ import DemographicChoropleth from "./DemographicChoropleth";
 import DemographicCountryTable from "./DemographicCountryTable";
 import type { RespondentStat } from "./demographicTypes";
 
-const surveyResponses = SurveyRepository.get2025Survey();
+const surveyResponses = SurveyRepository.getSurvey("2025");
 
 const normalizeCountry = (value: string) => value.replace(/\s+/g, " ").trim();
 

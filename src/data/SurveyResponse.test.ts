@@ -4,7 +4,8 @@ import { SurveyResponse } from "./SurveyResponse";
 import { SurveyRepository } from "./SurveyRepository";
 
 describe("SurveyResponse", () => {
-  const responses: readonly SurveyResponse[] = SurveyRepository.get2025Survey();
+  const responses: readonly SurveyResponse[] =
+    SurveyRepository.getSurvey("2025");
 
   it("normalizes the country of residence into a single attribute", () => {
     const response = responses.find((r) => r.raw.responseId === "29");

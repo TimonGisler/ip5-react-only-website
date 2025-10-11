@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "./components/Sidebar";
+import { SurveyRepository } from "./data/SurveyRepository";
 import Demographic from "./pages/demographic/Demographic";
 import DigitalSustainabilityRole from "./pages/DigitalSustainabilityRole";
 import GeneralAwareness from "./pages/GeneralAwareness";
 import SustainabilityTasks from "./pages/SustainabilityTasks";
 import "./index.css";
+
+export const availableYears = SurveyRepository.getAvailableYears();
 
 export const navigationSections = [
   { id: "demographic", label: "Demographic", component: Demographic },
@@ -31,6 +34,12 @@ function App() {
   const [activeSectionId, setActiveSectionId] = useState<SectionId>(
     navigationSections[0].id
   );
+  const [activeYear, setActiveYear] = useState<string>(availableYears[0]);
+
+  useEffect(() => {
+    const data = SurveyRepository.getSurvey(activeYear);
+    console.log(`Data for year ${activeYear}:`, data);
+  }, [activeYear]);
 
   const activeSection = navigationSections.find(
     (section) => section.id === activeSectionId
@@ -43,6 +52,9 @@ function App() {
       <Sidebar
         activeSectionId={activeSectionId}
         setActiveSectionId={setActiveSectionId}
+        availableYears={availableYears}
+        activeYear={activeYear}
+        setActiveYear={setActiveYear}
       />
       <main className="flex flex-1 flex-col p-12">
         <div className="w-full rounded-[var(--radius-card)] border border-plum-200/60 bg-lavender-100 px-10 py-12 shadow-card ring-1 ring-plum-200/40 backdrop-blur-sm">

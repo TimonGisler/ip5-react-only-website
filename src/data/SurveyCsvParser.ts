@@ -74,7 +74,6 @@ export class SurveyCsvParser {
   private constructor(records: SurveyRecord[]) {
     this.records = records;
   }
-
   static fromCsv(csv: string): SurveyCsvParser {
     const rows = parseCsv(csv);
     const [headerRow, ...dataRows] = rows;
@@ -83,20 +82,15 @@ export class SurveyCsvParser {
       throw new Error("CSV is missing a header row.");
     }
 
-    if (headerRow.length !== columnDefinitions.length) {
-      throw new Error(
-        `CSV column count ${headerRow.length} does not match expected ${columnDefinitions.length}.`
-      );
-    }
+    // Create a map of expected header text to its column index in the CSV file.
+    const normalizedCsvHeaders = headerRow.map(normalizeCell);
+    const headerIndexMap = new Map<SurveyColumnKey, number>();
 
-    columnDefinitions.forEach((definition, index) => {
-      const header = normalizeCell(headerRow[index]);
-      const expected = normalizeCell(definition.header);
-
-      if (header !== expected) {
-        throw new Error(
-          `Unexpected column header at index ${index}: "${header}" (expected "${expected}").`
-        );
+    columnDefinitions.forEach((definition) => {
+      const expectedHeader = normalizeCell(definition.header);
+      const index = normalizedCsvHeaders.indexOf(expectedHeader);
+      if (index !== -1) {
+        headerIndexMap.set(definition.key, index);
       }
     });
 
@@ -105,8 +99,15 @@ export class SurveyCsvParser {
       .map((row) => {
         const entry: Partial<SurveyRecord> = {};
 
-        columnDefinitions.forEach((definition, index) => {
-          entry[definition.key] = normalizeCell(row[index]);
+        // Use the map to find the correct column for each piece of data.
+        columnDefinitions.forEach((definition) => {
+          const index = headerIndexMap.get(definition.key);
+          if (index !== undefined && index < row.length) {
+            entry[definition.key] = normalizeCell(row[index]);
+          } else {
+            // Handle cases where the column is missing in the CSV.
+            entry[definition.key] = "";
+          }
         });
 
         return entry as SurveyRecord;
