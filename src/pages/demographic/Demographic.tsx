@@ -2,6 +2,7 @@ import { useMemo } from "react";
 
 import { useSurveyData } from "../../data/SurveyContext";
 import { useYear } from "../../data/YearContext";
+import DemographicAgeGroup from "./DemographicAgeGroup";
 import DemographicChoropleth from "./DemographicChoropleth";
 import DemographicCountryTable from "./DemographicCountryTable";
 import type { RespondentStat } from "./demographicTypes";
@@ -49,6 +50,7 @@ const Demographic = () => {
       <div className="grid gap-6 lg:grid-cols-2">
         <DemographicCountryTable respondentStats={respondentStats} />
         <DemographicChoropleth respondentStats={respondentStats} />
+        <DemographicAgeGroup />
       </div>
     </div>
   );
