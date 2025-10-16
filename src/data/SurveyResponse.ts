@@ -14,31 +14,43 @@ export type NormalizedSurveyResponse = Omit<
   (typeof countryOfResidenceColumns)[number]
 > & {
   readonly countryOfResidence: readonly string[];
+  readonly year: string;
 };
 
 export class SurveyResponse {
   private readonly record: SurveyRecord;
+  public readonly year: string;
 
-  private constructor(record: SurveyRecord) {
+  private constructor(record: SurveyRecord, year: string) {
     this.record = record;
+    this.year = year;
   }
 
-  static fromRecord(record: SurveyRecord): SurveyResponse {
-    return new SurveyResponse(record);
+  static fromRecord(record: SurveyRecord, year: string): SurveyResponse {
+    return new SurveyResponse(record, year);
   }
 
-  static fromRecords(records: readonly SurveyRecord[]): SurveyResponse[] {
-    return records.map((record) => SurveyResponse.fromRecord(record));
+  static fromRecords(
+    records: readonly SurveyRecord[],
+    year: string
+  ): SurveyResponse[] {
+    return records.map((record) => SurveyResponse.fromRecord(record, year));
   }
 
-  static normalizeRecord(record: SurveyRecord): NormalizedSurveyResponse {
-    return SurveyResponse.fromRecord(record).toNormalizedObject();
+  static normalizeRecord(
+    record: SurveyRecord,
+    year: string
+  ): NormalizedSurveyResponse {
+    return SurveyResponse.fromRecord(record, year).toNormalizedObject();
   }
 
   static normalizeRecords(
-    records: readonly SurveyRecord[]
+    records: readonly SurveyRecord[],
+    year: string
   ): NormalizedSurveyResponse[] {
-    return records.map((record) => SurveyResponse.normalizeRecord(record));
+    return records.map((record) =>
+      SurveyResponse.normalizeRecord(record, year)
+    );
   }
 
   get raw(): SurveyRecord {
@@ -74,6 +86,7 @@ export class SurveyResponse {
     return {
       ...rest,
       countryOfResidence: this.countryOfResidence,
+      year: this.year,
     } satisfies NormalizedSurveyResponse;
   }
 }

@@ -27,7 +27,7 @@ export class SurveyRepository {
 
     if (!this.cachedSurveys.has(year)) {
       const parser = SurveyCsvParser.fromCsv(csvContent);
-      const responses = SurveyResponse.fromRecords(parser.getAll());
+      const responses = SurveyResponse.fromRecords(parser.getAll(), year);
       this.cachedSurveys.set(year, responses);
     }
 

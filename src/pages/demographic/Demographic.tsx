@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 
 import { useSurveyData } from "../../data/SurveyContext";
-import { useYear } from "../../data/YearContext";
 import DemographicAgeGroup from "./DemographicAgeGroup";
 import DemographicChoropleth from "./DemographicChoropleth";
 import DemographicCountryTable from "./DemographicCountryTable";
@@ -11,7 +10,7 @@ const normalizeCountry = (value: string) => value.replace(/\s+/g, " ").trim();
 
 const Demographic = () => {
   const surveyResponses = useSurveyData();
-  const year = useYear();
+  const year = surveyResponses.length > 0 ? surveyResponses[0].year : "";
 
   const respondentStats = useMemo<RespondentStat[]>(() => {
     const counts = new Map<string, number>();
