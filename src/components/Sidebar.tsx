@@ -1,4 +1,4 @@
-import { navigationSections, type SectionId } from "../App";
+import { navigationSections, type SectionId } from "../constants/navigation";
 
 type SidebarProps = {
   activeSectionId: SectionId;
