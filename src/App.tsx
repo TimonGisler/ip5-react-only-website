@@ -8,7 +8,7 @@ import GeneralAwareness from "./pages/GeneralAwareness";
 import SustainabilityTasks from "./pages/SustainabilityTasks";
 import "./index.css";
 
-export const availableYears = SurveyRepository.getAvailableYears();
+const availableYears = SurveyRepository.getAvailableYears();
 
 export const navigationSections = [
   { id: "demographic", label: "Demographic", component: Demographic },
