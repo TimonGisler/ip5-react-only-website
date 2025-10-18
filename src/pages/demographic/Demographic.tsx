@@ -16,14 +16,11 @@ const Demographic = () => {
     const counts = new Map<string, number>();
 
     surveyResponses.forEach((response) => {
-      response.countryOfResidence
-        .map(normalizeCountry)
-        .filter(
-          (country) => country.length > 0 && country.toLowerCase() !== "n/a"
-        )
-        .forEach((country) => {
-          counts.set(country, (counts.get(country) ?? 0) + 1);
-        });
+      const country = normalizeCountry(response.getCountryOfResidence());
+
+      if (country.length > 0 && country.toLowerCase() !== "n/a") {
+        counts.set(country, (counts.get(country) ?? 0) + 1);
+      }
     });
 
     return Array.from(counts.entries())

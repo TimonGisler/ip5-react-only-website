@@ -9,84 +9,44 @@ const countryOfResidenceColumns = [
   "countryOfResidenceAlt4",
 ] as const satisfies readonly SurveyColumnKey[];
 
-export type NormalizedSurveyResponse = Omit<
-  SurveyRecord,
-  (typeof countryOfResidenceColumns)[number]
-> & {
-  readonly countryOfResidence: readonly string[];
-  readonly year: string;
-};
-
+/**
+ * Wrapper class that encapsulates a survey record and provides a nice API to access the data.
+ * The wrapped data is immutable and should not be modified.
+ */
 export class SurveyResponse {
-  private readonly record: SurveyRecord;
+  private readonly data: Readonly<SurveyRecord>;
   public readonly year: string;
 
-  private constructor(record: SurveyRecord, year: string) {
-    this.record = record;
+  /**
+   * Creates a new SurveyResponse from raw survey data.
+   * @param data The raw survey record data from the CSV parser
+   * @param year The year this survey response belongs to
+   */
+  constructor(data: SurveyRecord, year: string) {
+    this.data = Object.freeze({ ...data });
     this.year = year;
   }
 
-  static fromRecord(record: SurveyRecord, year: string): SurveyResponse {
-    return new SurveyResponse(record, year);
+  /**
+   * Gets the raw survey record data.
+   * Returns a readonly copy to prevent modifications.
+   */
+  get raw(): Readonly<SurveyRecord> {
+    return this.data;
   }
 
-  static fromRecords(
-    records: readonly SurveyRecord[],
-    year: string
-  ): SurveyResponse[] {
-    return records.map((record) => SurveyResponse.fromRecord(record, year));
-  }
-
-  static normalizeRecord(
-    record: SurveyRecord,
-    year: string
-  ): NormalizedSurveyResponse {
-    return SurveyResponse.fromRecord(record, year).toNormalizedObject();
-  }
-
-  static normalizeRecords(
-    records: readonly SurveyRecord[],
-    year: string
-  ): NormalizedSurveyResponse[] {
-    return records.map((record) =>
-      SurveyResponse.normalizeRecord(record, year)
-    );
-  }
-
-  get raw(): SurveyRecord {
-    return this.record;
-  }
-
-  get countryOfResidence(): readonly string[] {
-    const seen = new Set<string>();
-
-    return countryOfResidenceColumns
-      .map((column) => this.record[column])
-      .filter((value): value is string => value !== "")
-      .filter((value) => {
-        if (seen.has(value)) {
-          return false;
-        }
-
-        seen.add(value);
-        return true;
-      });
-  }
-
-  toNormalizedObject(): NormalizedSurveyResponse {
-    const {
-      countryOfResidence: _primaryCountry,
-      countryOfResidenceAlt1: _countryAlt1,
-      countryOfResidenceAlt2: _countryAlt2,
-      countryOfResidenceAlt3: _countryAlt3,
-      countryOfResidenceAlt4: _countryAlt4,
-      ...rest
-    } = this.record;
-
-    return {
-      ...rest,
-      countryOfResidence: this.countryOfResidence,
-      year: this.year,
-    } satisfies NormalizedSurveyResponse;
+  /**
+   * Gets the country of residence for this survey response.
+   * Returns the first non-empty country value from the possible country columns.
+   * Returns an empty string if no country is specified.
+   */
+  getCountryOfResidence(): string {
+    for (const column of countryOfResidenceColumns) {
+      const value = this.data[column];
+      if (value && value !== "") {
+        return value;
+      }
+    }
+    return "";
   }
 }
