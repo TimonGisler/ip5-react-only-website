@@ -1,7 +1,7 @@
 import Demographic from "../pages/demographic/DemographicPage";
 import DigitalSustainabilityRole from "../pages/role-of-digital-sustainability/DigitalSustainabilityRolePage";
 import GeneralAwareness from "../pages/general-awareness/GeneralAwarenessPage";
-import SustainabilityTasks from "../pages/sustainability-in-job-and-tasks/SustainabilityTasks";
+import SustainabilityTasks from "../pages/sustainability-in-job-and-tasks/SustainabilityTasksPage";
 
 export const navigationSections = [
   { id: "demographic", label: "Demographic", component: Demographic },
