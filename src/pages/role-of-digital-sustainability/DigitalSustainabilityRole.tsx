@@ -1,4 +1,5 @@
 import SustainabilityDimensions from "./SustainabilityDimensions";
+import NoTrainingReasons from "./NoTrainingReasons";
 
 const DigitalSustainabilityRole = () => {
   return (
@@ -9,6 +10,13 @@ const DigitalSustainabilityRole = () => {
 
       <div className="grid grid-cols-1 gap-6">
         <SustainabilityDimensions />
+
+        <div className="space-y-2">
+          <h2 className="text-xl font-medium text-ink-700">
+            Organizational Training and Resources
+          </h2>
+          <NoTrainingReasons />
+        </div>
       </div>
     </div>
   );
