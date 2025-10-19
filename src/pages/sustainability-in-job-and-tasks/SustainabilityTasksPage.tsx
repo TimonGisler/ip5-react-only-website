@@ -1,6 +1,7 @@
 import DriversToIncorporateSustainability from "./graphs/DriversToIncorporateSustainability";
 import HindrancesToIncorporateSustainability from "./graphs/HindrancesToIncorporateSustainability";
 import KnowledgeGapsByDimension from "./graphs/KnowledgeGapsByDimension";
+import AdditionalSupportResources from "./graphs/AdditionalSupportResources";
 
 const SustainabilityTasks = () => {
   return (
@@ -19,6 +20,7 @@ const SustainabilityTasks = () => {
         <DriversToIncorporateSustainability />
         <HindrancesToIncorporateSustainability />
         <KnowledgeGapsByDimension />
+        <AdditionalSupportResources />
       </div>
     </div>
   );
