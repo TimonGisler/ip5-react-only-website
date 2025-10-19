@@ -1,4 +1,5 @@
 import DiscussionFrequency from "./DiscussionFrequency";
+import TrainingSatisfaction from "./TrainingSatisfaction";
 
 const GeneralAwareness = () => {
   return (
@@ -9,6 +10,7 @@ const GeneralAwareness = () => {
 
       <div className="grid grid-cols-1 gap-6">
         <DiscussionFrequency />
+        <TrainingSatisfaction />
       </div>
     </div>
   );
