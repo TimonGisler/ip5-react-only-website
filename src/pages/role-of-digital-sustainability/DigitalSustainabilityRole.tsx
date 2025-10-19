@@ -1,5 +1,6 @@
 import SustainabilityDimensions from "./SustainabilityDimensions";
 import NoTrainingReasons from "./NoTrainingReasons";
+import OrganizationOffersTraining from "./OrganizationOffersTraining";
 
 const DigitalSustainabilityRole = () => {
   return (
@@ -15,6 +16,7 @@ const DigitalSustainabilityRole = () => {
           <h2 className="text-xl font-medium text-ink-700">
             Organizational Training and Resources
           </h2>
+          <OrganizationOffersTraining />
           <NoTrainingReasons />
         </div>
       </div>
