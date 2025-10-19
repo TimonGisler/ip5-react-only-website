@@ -3,6 +3,7 @@ import Plot from "react-plotly.js";
 import type { Data, Layout } from "plotly.js";
 
 import type { RespondentStat } from "../demographic/demographicTypes";
+import useThemeColor from "./hooks/useThemeColor";
 
 type DemographicChoroplethProps = {
   respondentStats: RespondentStat[];
@@ -11,6 +12,11 @@ type DemographicChoroplethProps = {
 const DemographicChoropleth = ({
   respondentStats,
 }: DemographicChoroplethProps) => {
+  const titleColor = useThemeColor("--color-ink-900");
+  const landColor = useThemeColor("--color-lavender-50");
+  const coastlineColor = useThemeColor("--color-ink-900");
+  const lakeColor = useThemeColor("--color-lavender-100");
+  const markerLineColor = useThemeColor("--color-lavender-100");
   const choroplethData = useMemo<Data[]>(
     () => [
       {
@@ -26,7 +32,7 @@ const DemographicChoropleth = ({
         marker: {
           line: {
             width: 0.5,
-            color: "rgba(255, 255, 255, 0.8)",
+            color: markerLineColor,
           },
         },
         colorbar: {
@@ -36,7 +42,7 @@ const DemographicChoropleth = ({
         },
       },
     ],
-    [respondentStats]
+    [respondentStats, markerLineColor]
   );
 
   const layout = useMemo<Partial<Layout>>(
@@ -47,10 +53,10 @@ const DemographicChoropleth = ({
           type: "natural earth",
         },
         showcoastlines: true,
-        coastlinecolor: "#0f172a",
-        landcolor: "#f1f5f9",
+        coastlinecolor: coastlineColor,
+        landcolor: landColor,
         bgcolor: "rgba(0,0,0,0)",
-        lakecolor: "#e2e8f0",
+        lakecolor: lakeColor,
       },
       paper_bgcolor: "rgba(0,0,0,0)",
       plot_bgcolor: "rgba(0,0,0,0)",
@@ -60,11 +66,11 @@ const DemographicChoropleth = ({
         font: {
           family: "Inter, sans-serif",
           size: 20,
-          color: "#1f2937",
+          color: titleColor,
         },
       },
     }),
-    []
+    [titleColor, landColor, coastlineColor, lakeColor]
   );
 
   return (

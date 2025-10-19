@@ -3,17 +3,21 @@ import Plot from "react-plotly.js";
 import type { Data, Layout } from "plotly.js";
 
 import type { RespondentStat } from "./demographicTypes";
+import useThemeColor from "./hooks/useThemeColor";
 
 type DemographicCountryTableProps = {
   respondentStats: RespondentStat[];
 };
 
-const tableHeaderFillColor = "#ede9fe";
-const tableCellFillColor = "#f8fafc";
-
 const DemographicCountryTable = ({
   respondentStats,
 }: DemographicCountryTableProps) => {
+  const tableHeaderFillColor = useThemeColor("--color-lavender-50");
+  const tableCellFillColor = useThemeColor("--color-lavender-100");
+  const headerFontColor = useThemeColor("--color-ink-900");
+  const cellFontColor = useThemeColor("--color-ink-700");
+  const titleColor = useThemeColor("--color-ink-900");
+
   const tableData = useMemo<Data[]>(
     () => [
       {
@@ -28,7 +32,7 @@ const DemographicCountryTable = ({
           font: {
             family: "Inter, sans-serif",
             size: 14,
-            color: "#1f2937",
+            color: headerFontColor,
             weight: 600,
           },
           line: {
@@ -48,7 +52,7 @@ const DemographicCountryTable = ({
           font: {
             family: "Inter, sans-serif",
             size: 13,
-            color: "#334155",
+            color: cellFontColor,
           },
           line: {
             color: "rgba(148, 163, 184, 0.2)",
@@ -59,7 +63,13 @@ const DemographicCountryTable = ({
         hoverinfo: "skip",
       },
     ],
-    [respondentStats]
+    [
+      respondentStats,
+      tableHeaderFillColor,
+      tableCellFillColor,
+      headerFontColor,
+      cellFontColor,
+    ]
   );
 
   const layout = useMemo<Partial<Layout>>(
@@ -72,11 +82,11 @@ const DemographicCountryTable = ({
         font: {
           family: "Inter, sans-serif",
           size: 18,
-          color: "#1f2937",
+          color: titleColor,
         },
       },
     }),
-    []
+    [titleColor]
   );
 
   return (

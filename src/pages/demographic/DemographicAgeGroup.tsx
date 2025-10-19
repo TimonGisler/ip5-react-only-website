@@ -4,12 +4,14 @@ import type { Data, Layout } from "plotly.js";
 
 import { useSurveyData } from "../../data/SurveyContext";
 import type { AgeGroupStat } from "./demographicTypes";
+import useThemeColor from "./hooks/useThemeColor";
 
 const normalizeAgeGroup = (value: string) => value.replace(/\s+/g, " ").trim();
 
-const chartBarColor = "#a78bfa";
-
 const DemographicAgeGroup = () => {
+  const chartBarColor = useThemeColor("--color-plum-400");
+  const titleColor = useThemeColor("--color-ink-900");
+  const tickColor = useThemeColor("--color-ink-700");
   const surveyResponses = useSurveyData();
 
   const ageGroupStats = useMemo<AgeGroupStat[]>(() => {
@@ -50,7 +52,7 @@ const DemographicAgeGroup = () => {
         hoverinfo: "none",
       },
     ];
-  }, [ageGroupStats]);
+  }, [ageGroupStats, chartBarColor]);
 
   const layout = useMemo<Partial<Layout>>(
     () => ({
@@ -62,7 +64,7 @@ const DemographicAgeGroup = () => {
         font: {
           family: "Inter, sans-serif",
           size: 18,
-          color: "#1f2937",
+          color: titleColor,
         },
       },
       xaxis: {
@@ -70,18 +72,18 @@ const DemographicAgeGroup = () => {
         tickfont: {
           family: "Inter, sans-serif",
           size: 12,
-          color: "#475569",
+          color: tickColor,
         },
       },
       yaxis: {
         tickfont: {
           family: "Inter, sans-serif",
           size: 12,
-          color: "#475569",
+          color: tickColor,
         },
       },
     }),
-    []
+    [titleColor, tickColor]
   );
 
   return (
