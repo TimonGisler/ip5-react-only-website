@@ -1,8 +1,22 @@
+import DriversToIncorporateSustainability from "./graphs/DriversToIncorporateSustainability";
+
 const SustainabilityTasks = () => {
   return (
-    <h1 className="text-3xl font-semibold tracking-tight text-plum-500">
-      Sustainability in Your Job and Tasks
-    </h1>
+    <div className="space-y-6">
+      <header>
+        <h1 className="text-3xl font-semibold tracking-tight text-plum-500">
+          Sustainability in Your Job and Tasks
+        </h1>
+        <p className="mt-2 max-w-2xl text-sm text-slate-600">
+          What drives professionals to integrate digital sustainability into
+          their role-specific tasks based on the latest survey data.
+        </p>
+      </header>
+
+      <div className="grid gap-6 lg:grid-cols-2">
+        <DriversToIncorporateSustainability />
+      </div>
+    </div>
   );
 };
 
