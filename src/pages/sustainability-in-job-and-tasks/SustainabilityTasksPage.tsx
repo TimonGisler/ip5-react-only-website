@@ -2,6 +2,7 @@ import DriversToIncorporateSustainability from "./graphs/DriversToIncorporateSus
 import HindrancesToIncorporateSustainability from "./graphs/HindrancesToIncorporateSustainability";
 import KnowledgeGapsByDimension from "./graphs/KnowledgeGapsByDimension";
 import AdditionalSupportResources from "./graphs/AdditionalSupportResources";
+import SustainabilityDimensionsInTasks from "./graphs/SustainabilityDimensionsInTasks";
 
 const SustainabilityTasks = () => {
   return (
@@ -19,6 +20,7 @@ const SustainabilityTasks = () => {
       <div className="grid gap-6 lg:grid-cols-2">
         <DriversToIncorporateSustainability />
         <HindrancesToIncorporateSustainability />
+        <SustainabilityDimensionsInTasks />
         <KnowledgeGapsByDimension />
         <AdditionalSupportResources />
       </div>
