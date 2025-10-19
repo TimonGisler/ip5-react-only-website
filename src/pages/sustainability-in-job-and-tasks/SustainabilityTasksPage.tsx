@@ -1,4 +1,5 @@
 import DriversToIncorporateSustainability from "./graphs/DriversToIncorporateSustainability";
+import HindrancesToIncorporateSustainability from "./graphs/HindrancesToIncorporateSustainability";
 
 const SustainabilityTasks = () => {
   return (
@@ -15,6 +16,7 @@ const SustainabilityTasks = () => {
 
       <div className="grid gap-6 lg:grid-cols-2">
         <DriversToIncorporateSustainability />
+        <HindrancesToIncorporateSustainability />
       </div>
     </div>
   );
