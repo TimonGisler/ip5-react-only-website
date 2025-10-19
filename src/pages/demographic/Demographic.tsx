@@ -4,6 +4,7 @@ import { useSurveyData } from "../../data/SurveyContext";
 import DemographicAgeGroup from "./DemographicAgeGroup";
 import DemographicChoropleth from "./DemographicChoropleth";
 import DemographicCountryTable from "./DemographicCountryTable";
+import { DemographicProfessionalExperience } from "./DemographicProfessionalExperience";
 import type { RespondentStat } from "./demographicTypes";
 
 const normalizeCountry = (value: string) => value.replace(/\s+/g, " ").trim();
@@ -47,6 +48,7 @@ const Demographic = () => {
         <DemographicCountryTable respondentStats={respondentStats} />
         <DemographicChoropleth respondentStats={respondentStats} />
         <DemographicAgeGroup />
+        <DemographicProfessionalExperience />
       </div>
     </div>
   );
