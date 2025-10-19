@@ -1,4 +1,4 @@
-import DiscussionFrequency from "./general-awareness/DiscussionFrequency";
+import DiscussionFrequency from "./DiscussionFrequency";
 
 const GeneralAwareness = () => {
   return (
