@@ -16,7 +16,7 @@ function Sidebar({
   setActiveYear,
 }: SidebarProps) {
   return (
-    <aside className="flex w-72 flex-col gap-6 rounded-r-3xl border-r border-plum-200/60 bg-lavender-100 px-8 py-8 shadow-card">
+    <aside className="sticky top-0 flex h-screen w-72 shrink-0 flex-col gap-6 overflow-y-auto rounded-r-3xl border-r border-plum-200/60 bg-lavender-100 px-8 py-8 shadow-card">
       <div className="text-lg font-semibold tracking-tight text-plum-600">
         Sustainability Survey
       </div>
