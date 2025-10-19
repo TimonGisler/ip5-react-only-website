@@ -1,6 +1,6 @@
-import Demographic from "../pages/demographic/Demographic";
-import DigitalSustainabilityRole from "../pages/role-of-digital-sustainability/DigitalSustainabilityRole";
-import GeneralAwareness from "../pages/general-awareness/GeneralAwareness";
+import Demographic from "../pages/demographic/DemographicPage";
+import DigitalSustainabilityRole from "../pages/role-of-digital-sustainability/DigitalSustainabilityRolePage";
+import GeneralAwareness from "../pages/general-awareness/GeneralAwarenessPage";
 import SustainabilityTasks from "../pages/sustainability-in-job-and-tasks/SustainabilityTasks";
 
 export const navigationSections = [

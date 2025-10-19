@@ -2,8 +2,8 @@ import { useMemo } from "react";
 import Plot from "react-plotly.js";
 import type { Data, Layout } from "plotly.js";
 
-import type { RespondentStat } from "../demographic/demographicTypes";
-import useThemeColor from "./hooks/useThemeColor";
+import type { RespondentStat } from "../demographicTypes";
+import useThemeColor from "../../../hooks/useThemeColor";
 
 type DemographicChoroplethProps = {
   respondentStats: RespondentStat[];

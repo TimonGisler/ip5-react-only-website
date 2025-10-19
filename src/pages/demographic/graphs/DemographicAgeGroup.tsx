@@ -2,9 +2,9 @@ import { useMemo } from "react";
 import Plot from "react-plotly.js";
 import type { Data, Layout } from "plotly.js";
 
-import { useSurveyData } from "../../data/SurveyContext";
-import type { AgeGroupStat } from "./demographicTypes";
-import useThemeColor from "./hooks/useThemeColor";
+import { useSurveyData } from "../../../data/SurveyContext";
+import type { AgeGroupStat } from "../demographicTypes";
+import useThemeColor from "../../../hooks/useThemeColor";
 
 const normalizeAgeGroup = (value: string) => value.replace(/\s+/g, " ").trim();
 

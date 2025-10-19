@@ -1,13 +1,13 @@
 import { useMemo } from "react";
 
 import { useSurveyData } from "../../data/SurveyContext";
-import DemographicAgeGroup from "./DemographicAgeGroup";
-import DemographicApplicationDomain from "./DemographicApplicationDomain";
-import DemographicChoropleth from "./DemographicChoropleth";
-import DemographicCountryTable from "./DemographicCountryTable";
-import DemographicOrganizationalRole from "./DemographicOrganizationalRole";
-import DemographicOrganizationType from "./DemographicOrganizationType";
-import { DemographicProfessionalExperience } from "./DemographicProfessionalExperience";
+import DemographicAgeGroup from "./graphs/DemographicAgeGroup";
+import DemographicApplicationDomain from "./graphs/DemographicApplicationDomain";
+import DemographicChoropleth from "./graphs/DemographicChoropleth";
+import DemographicCountryTable from "./graphs/DemographicCountryTable";
+import DemographicOrganizationalRole from "./graphs/DemographicOrganizationalRole";
+import DemographicOrganizationType from "./graphs/DemographicOrganizationType";
+import { DemographicProfessionalExperience } from "./graphs/DemographicProfessionalExperience";
 import type { RespondentStat } from "./demographicTypes";
 
 const normalizeCountry = (value: string) => value.replace(/\s+/g, " ").trim();

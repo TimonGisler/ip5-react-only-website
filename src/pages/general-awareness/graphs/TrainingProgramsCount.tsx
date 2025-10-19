@@ -2,8 +2,8 @@ import { useMemo } from "react";
 import Plot from "react-plotly.js";
 import type { Data, Layout } from "plotly.js";
 
-import { useSurveyData } from "../../data/SurveyContext";
-import useThemeColor from "../demographic/hooks/useThemeColor";
+import { useSurveyData } from "../../../data/SurveyContext";
+import useThemeColor from "../../../hooks/useThemeColor";
 
 type CountStat = {
   label: string;

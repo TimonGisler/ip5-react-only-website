@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import Plot from "react-plotly.js";
-import { useSurveyData } from "../../data/SurveyContext";
-import useThemeColor from "./hooks/useThemeColor";
+import { useSurveyData } from "../../../data/SurveyContext";
+import useThemeColor from "../../../hooks/useThemeColor";
 import type { Data, Layout } from "plotly.js";
 
 export function DemographicProfessionalExperience() {

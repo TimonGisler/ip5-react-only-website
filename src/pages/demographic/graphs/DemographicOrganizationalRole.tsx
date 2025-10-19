@@ -2,45 +2,42 @@ import { useMemo } from "react";
 import Plot from "react-plotly.js";
 import type { Data, Layout } from "plotly.js";
 
-import { useSurveyData } from "../../data/SurveyContext";
-import useThemeColor from "./hooks/useThemeColor";
+import { useSurveyData } from "../../../data/SurveyContext";
+import useThemeColor from "../../../hooks/useThemeColor";
 
-interface OrganizationTypeStat {
-  organizationType: string;
+interface RoleStat {
+  role: string;
   count: number;
 }
 
-const normalizeOrganizationType = (value: string) =>
-  value.replace(/\s+/g, " ").trim();
+const normalizeRole = (value: string) => value.replace(/\s+/g, " ").trim();
 
-const DemographicOrganizationType = () => {
+const DemographicOrganizationalRole = () => {
   const chartBarColor = useThemeColor("--color-plum-400");
   const titleColor = useThemeColor("--color-ink-900");
   const tickColor = useThemeColor("--color-ink-700");
   const surveyResponses = useSurveyData();
 
-  const organizationTypeStats = useMemo<OrganizationTypeStat[]>(() => {
+  const roleStats = useMemo<RoleStat[]>(() => {
     const counts = new Map<string, number>();
 
     surveyResponses.forEach((response) => {
-      const orgType = normalizeOrganizationType(
-        response.raw.organizationType ?? ""
-      );
-      if (orgType.length > 0 && orgType.toLowerCase() !== "n/a") {
-        counts.set(orgType, (counts.get(orgType) ?? 0) + 1);
+      const role = normalizeRole(response.raw.role ?? "");
+      if (role.length > 0 && role.toLowerCase() !== "n/a") {
+        counts.set(role, (counts.get(role) ?? 0) + 1);
       }
     });
 
     return Array.from(counts.entries())
-      .map(([organizationType, count]) => ({ organizationType, count }))
+      .map(([role, count]) => ({ role, count }))
       .sort((a, b) => b.count - a.count);
   }, [surveyResponses]);
 
   const chartData = useMemo<Data[]>(() => {
     return [
       {
-        x: organizationTypeStats.map((item) => item.count),
-        y: organizationTypeStats.map((item) => item.organizationType),
+        x: roleStats.map((item) => item.count),
+        y: roleStats.map((item) => item.role),
         type: "bar",
         orientation: "h",
         marker: {
@@ -49,7 +46,7 @@ const DemographicOrganizationType = () => {
         hoverinfo: "none",
       },
     ];
-  }, [organizationTypeStats, chartBarColor]);
+  }, [roleStats, chartBarColor]);
 
   const layout = useMemo<Partial<Layout>>(
     () => ({
@@ -57,7 +54,7 @@ const DemographicOrganizationType = () => {
       paper_bgcolor: "rgba(0,0,0,0)",
       plot_bgcolor: "rgba(0,0,0,0)",
       title: {
-        text: "What type of organization do you work for?",
+        text: "Current Role in Organization",
         font: {
           family: "Inter, sans-serif",
           size: 18,
@@ -104,4 +101,4 @@ const DemographicOrganizationType = () => {
   );
 };
 
-export default DemographicOrganizationType;
+export default DemographicOrganizationalRole;

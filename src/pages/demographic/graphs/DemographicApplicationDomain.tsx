@@ -2,59 +2,66 @@ import { useMemo } from "react";
 import Plot from "react-plotly.js";
 import type { Data, Layout } from "plotly.js";
 
-import { useSurveyData } from "../../data/SurveyContext";
-import useThemeColor from "./hooks/useThemeColor";
+import { useSurveyData } from "../../../data/SurveyContext";
+import useThemeColor from "../../../hooks/useThemeColor";
 
-interface RoleStat {
-  role: string;
-  count: number;
-}
+const normalizeApplicationDomain = (value: string) =>
+  value.replace(/\s+/g, " ").trim();
 
-const normalizeRole = (value: string) => value.replace(/\s+/g, " ").trim();
-
-const DemographicOrganizationalRole = () => {
+const DemographicApplicationDomain = () => {
   const chartBarColor = useThemeColor("--color-plum-400");
   const titleColor = useThemeColor("--color-ink-900");
   const tickColor = useThemeColor("--color-ink-700");
   const surveyResponses = useSurveyData();
 
-  const roleStats = useMemo<RoleStat[]>(() => {
+  const applicationDomainStats = useMemo(() => {
     const counts = new Map<string, number>();
 
     surveyResponses.forEach((response) => {
-      const role = normalizeRole(response.raw.role ?? "");
-      if (role.length > 0 && role.toLowerCase() !== "n/a") {
-        counts.set(role, (counts.get(role) ?? 0) + 1);
+      const primaryDomain = normalizeApplicationDomain(
+        response.raw.primaryApplicationDomain ?? ""
+      );
+      const otherDomain = normalizeApplicationDomain(
+        response.raw.primaryApplicationDomainOther ?? ""
+      );
+
+      // Use the "Other" field if primary domain is "Other" and there's a value
+      const domain =
+        primaryDomain.toLowerCase() === "other" && otherDomain.length > 0
+          ? otherDomain
+          : primaryDomain;
+
+      if (domain.length > 0 && domain.toLowerCase() !== "n/a") {
+        counts.set(domain, (counts.get(domain) ?? 0) + 1);
       }
     });
 
     return Array.from(counts.entries())
-      .map(([role, count]) => ({ role, count }))
+      .map(([domain, count]) => ({ domain, count }))
       .sort((a, b) => b.count - a.count);
   }, [surveyResponses]);
 
   const chartData = useMemo<Data[]>(() => {
     return [
       {
-        x: roleStats.map((item) => item.count),
-        y: roleStats.map((item) => item.role),
+        x: applicationDomainStats.map((item) => item.domain),
+        y: applicationDomainStats.map((item) => item.count),
         type: "bar",
-        orientation: "h",
         marker: {
           color: chartBarColor,
         },
         hoverinfo: "none",
       },
     ];
-  }, [roleStats, chartBarColor]);
+  }, [applicationDomainStats, chartBarColor]);
 
   const layout = useMemo<Partial<Layout>>(
     () => ({
-      margin: { t: 30, r: 20, b: 40, l: 200 },
+      margin: { t: 30, r: 0, b: 120, l: 40 },
       paper_bgcolor: "rgba(0,0,0,0)",
       plot_bgcolor: "rgba(0,0,0,0)",
       title: {
-        text: "Current Role in Organization",
+        text: "Application Domain of Respondents",
         font: {
           family: "Inter, sans-serif",
           size: 18,
@@ -62,27 +69,19 @@ const DemographicOrganizationalRole = () => {
         },
       },
       xaxis: {
+        tickangle: -45,
         tickfont: {
           family: "Inter, sans-serif",
           size: 12,
           color: tickColor,
         },
-        title: {
-          text: "Number of Respondents",
-          font: {
-            family: "Inter, sans-serif",
-            size: 12,
-            color: tickColor,
-          },
-        },
       },
       yaxis: {
         tickfont: {
           family: "Inter, sans-serif",
-          size: 11,
+          size: 12,
           color: tickColor,
         },
-        automargin: true,
       },
     }),
     [titleColor, tickColor]
@@ -101,4 +100,4 @@ const DemographicOrganizationalRole = () => {
   );
 };
 
-export default DemographicOrganizationalRole;
+export default DemographicApplicationDomain;

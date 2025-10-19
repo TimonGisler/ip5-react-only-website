@@ -1,6 +1,6 @@
-import SustainabilityDimensions from "./SustainabilityDimensions";
-import NoTrainingReasons from "./NoTrainingReasons";
-import OrganizationOffersTraining from "./OrganizationOffersTraining";
+import SustainabilityDimensions from "./graphs/SustainabilityDimensions";
+import NoTrainingReasons from "./graphs/NoTrainingReasons";
+import OrganizationOffersTraining from "./graphs/OrganizationOffersTraining";
 
 const DigitalSustainabilityRole = () => {
   return (

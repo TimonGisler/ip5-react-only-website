@@ -1,6 +1,6 @@
-import DiscussionFrequency from "./DiscussionFrequency";
-import TrainingSatisfaction from "./TrainingSatisfaction";
-import TrainingProgramsCount from "./TrainingProgramsCount";
+import DiscussionFrequency from "./graphs/DiscussionFrequency";
+import TrainingSatisfaction from "./graphs/TrainingSatisfaction";
+import TrainingProgramsCount from "./graphs/TrainingProgramsCount";
 
 const GeneralAwareness = () => {
   return (
