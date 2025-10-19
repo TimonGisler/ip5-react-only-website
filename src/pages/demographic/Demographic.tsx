@@ -6,6 +6,7 @@ import DemographicApplicationDomain from "./DemographicApplicationDomain";
 import DemographicChoropleth from "./DemographicChoropleth";
 import DemographicCountryTable from "./DemographicCountryTable";
 import DemographicOrganizationalRole from "./DemographicOrganizationalRole";
+import DemographicOrganizationType from "./DemographicOrganizationType";
 import { DemographicProfessionalExperience } from "./DemographicProfessionalExperience";
 import type { RespondentStat } from "./demographicTypes";
 
@@ -52,6 +53,7 @@ const Demographic = () => {
         <DemographicAgeGroup />
         <DemographicProfessionalExperience />
         <DemographicOrganizationalRole />
+        <DemographicOrganizationType />
         <DemographicApplicationDomain />
       </div>
     </div>
