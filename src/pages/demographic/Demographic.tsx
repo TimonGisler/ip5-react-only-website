@@ -2,6 +2,7 @@ import { useMemo } from "react";
 
 import { useSurveyData } from "../../data/SurveyContext";
 import DemographicAgeGroup from "./DemographicAgeGroup";
+import DemographicApplicationDomain from "./DemographicApplicationDomain";
 import DemographicChoropleth from "./DemographicChoropleth";
 import DemographicCountryTable from "./DemographicCountryTable";
 import { DemographicProfessionalExperience } from "./DemographicProfessionalExperience";
@@ -49,6 +50,7 @@ const Demographic = () => {
         <DemographicChoropleth respondentStats={respondentStats} />
         <DemographicAgeGroup />
         <DemographicProfessionalExperience />
+        <DemographicApplicationDomain />
       </div>
     </div>
   );
